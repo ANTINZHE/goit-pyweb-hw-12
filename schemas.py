@@ -29,3 +29,25 @@ class ContactResponse(ContactBase):
 
     class Config:
         from_attributes = True # Дозволяє Pydantic читати дані з об'єктів SQLAlchemy
+
+# Схеми для користувача
+class UserCreate(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=6)
+
+class UserResponse(BaseModel):
+    id: int
+    email: EmailStr
+
+    class Config:
+        from_attributes = True
+
+# Схеми для аутентифікації
+class TokenModel(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str = "bearer"
+
+class LoginModel(BaseModel):
+    email: EmailStr
+    password: str

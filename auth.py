@@ -3,7 +3,7 @@ from typing import Optional
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 
-# Секретні ключі (у реальному проекті їх треба ховати у файл .env!)
+# Секретні ключі
 SECRET_KEY = "super_secret_key_for_access_token"
 REFRESH_SECRET_KEY = "super_secret_key_for_refresh_token"
 ALGORITHM = "HS256"
@@ -17,7 +17,7 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
-# Створення Access Token (діє недовго, наприклад, 15 хвилин)
+# Створення Access Token
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     expire = datetime.utcnow() + (expires_delta if expires_delta else timedelta(minutes=15))
@@ -25,7 +25,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-# Створення Refresh Token (діє довго, наприклад, 7 днів)
+# Створення Refresh Token
 def create_refresh_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
     expire = datetime.utcnow() + (expires_delta if expires_delta else timedelta(days=7))
